@@ -1,0 +1,25 @@
+pipeline {
+  agent any
+
+  tools {nodejs "{your_nodejs_configured_tool_name}"}
+
+  stages {
+    stage('Install Postman CLI') {
+      steps {
+        sh 'curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh'
+      }
+    }
+
+    stage('Postman CLI Login') {
+      steps {
+        sh 'postman login --with-api-key $POSTMAN_API_KEY'
+        }
+    }
+
+    stage('Running collection') {
+      steps {
+        sh 'postman collection run "46940422-681740d2-1483-466d-9f83-dc5c1b26dc75"-e "46940422-d95b4266-f06a-45e3-982e-e7f17b216208"'
+      }
+    }
+  }
+}
